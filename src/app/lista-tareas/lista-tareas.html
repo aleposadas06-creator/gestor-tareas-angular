@@ -1,0 +1,57 @@
+<div *ngIf="mensajeVisible" class="alert alert-success text-center mb-3">
+  Tarea agregada correctamente ✅
+</div>
+
+<form (ngSubmit)="agregarTarea()" class="mb-3">
+
+  <div class="input-group">
+    <input 
+      type="text"
+      class="form-control rounded-start-pill"
+      placeholder="Escribe una nueva tarea..."
+      [(ngModel)]="nuevaTarea"
+      name="tarea">
+
+    <button 
+      class="btn btn-primary rounded-end-pill"
+      type="submit">
+      Agregar
+    </button>
+  </div>
+
+</form>
+
+<ul class="list-group list-group-flush mb-3">
+
+  <li 
+    class="list-group-item d-flex align-items-center justify-content-between"
+    *ngFor="let tarea of tareas">
+
+    <div class="form-check">
+      <input 
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="tarea.completada"
+        [ngModelOptions]="{standalone: true}">
+
+      <label 
+        class="form-check-label"
+        [class.text-decoration-line-through]="tarea.completada"
+        [class.text-muted]="tarea.completada">
+
+        {{ tarea.nombre }}
+
+      </label>
+    </div>
+
+  </li>
+
+</ul>
+
+<button 
+  class="btn btn-success w-100"
+  (click)="guardarCambios()">
+
+  Guardar cambios
+
+</button>

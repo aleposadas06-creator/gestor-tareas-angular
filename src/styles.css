@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+body {
+  background: linear-gradient(135deg, #b8cbd0, #81a5c8);
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.titulo-principal {
+  color: #2c4a7a;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Animación para el mensaje de éxito */
+.alert-success {
+  animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.list-group-item {
+  transition: 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(4px);
+}
+
+.btn-guardar {
+  background-color: #198754;
+  border: none;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #157347;
+  transform: translateY(-2px);
+}
+
+.rounded-start-pill {
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+}
+
+.rounded-end-pill {
+  border-top-right-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+}
