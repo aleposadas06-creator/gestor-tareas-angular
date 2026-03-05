@@ -1,6 +1,7 @@
-import { Component, HostBinding, ChangeDetectorRef } from '@angular/core';
+import { Component, HostBinding, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TareasService } from '../tareas';
 
 @Component({
   selector: 'app-lista-tareas',
@@ -9,40 +10,72 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './lista-tareas.html',
   styleUrls: ['./lista-tareas.css']
 })
-export class ListaTareas {
+export class ListaTareas implements OnInit {
 
   @HostBinding('class')
   hostClass = 'd-block';
 
-  tareas = [
-    { nombre: 'Estudiar Angular', completada: false },
-    { nombre: 'Hacer el proyecto', completada: false },
-    { nombre: 'Subir a GitHub', completada: false }
-  ];
-
+  tareas: any[] = [];
   nuevaTarea = '';
   mensajeVisible = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private tareasService: TareasService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+  this.cargarTareas();
+}
+
+cargarTareas() {
+  this.tareasService.obtenerTareas().subscribe((data: any) => {
+
+    this.tareas = data;
+
+    this.cdr.detectChanges();
+
+  });
+}
 
   agregarTarea() {
-    if (!this.nuevaTarea.trim()) return;
 
-    this.tareas.push({
-      nombre: this.nuevaTarea.trim(),
-      completada: false
+  if (!this.nuevaTarea.trim()) return;
+
+  this.tareasService.agregarTarea(this.nuevaTarea)
+    .subscribe(() => {
+
+      this.nuevaTarea = '';
+      this.cargarTareas();
+
+      this.mensajeVisible = true;
+
+      setTimeout(() => {
+        this.mensajeVisible = false;
+        this.cdr.detectChanges();
+      }, 2000);
+
     });
 
-    this.nuevaTarea = '';
-    this.mensajeVisible = true;
-
-    setTimeout(() => {
-      this.mensajeVisible = false;
-      this.cdr.detectChanges();
-    }, 2000);
-  }
+}
 
   guardarCambios() {
-    this.tareas = this.tareas.filter(t => !t.completada);
+
+  const tareasPendientes = this.tareas.filter(t => !t.completada);
+
+  if (tareasPendientes.length === this.tareas.length) {
+    alert("No hay tareas marcadas para eliminar");
+    return;
   }
+
+  this.tareas = tareasPendientes;
+
+  this.mensajeVisible = true;
+
+setTimeout(() => {
+  this.mensajeVisible = false;
+}, 2000);
+
+  }
+
 }

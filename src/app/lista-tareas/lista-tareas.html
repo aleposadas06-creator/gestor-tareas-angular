@@ -1,57 +1,58 @@
-<div *ngIf="mensajeVisible" class="alert alert-success text-center mb-3">
-  Tarea agregada correctamente ✅
-</div>
+<div class="card shadow-lg border-0 rounded-4 p-4">
 
-<form (ngSubmit)="agregarTarea()" class="mb-3">
+  <h2 class="text-center mb-4">Gestor de Tareas</h2>
 
-  <div class="input-group">
-    <input 
-      type="text"
-      class="form-control rounded-start-pill"
-      placeholder="Escribe una nueva tarea..."
-      [(ngModel)]="nuevaTarea"
-      name="tarea">
-
-    <button 
-      class="btn btn-primary rounded-end-pill"
-      type="submit">
-      Agregar
-    </button>
+  <div *ngIf="mensajeVisible" class="alert alert-success text-center">
+    Cambios guardados correctamente ✅
   </div>
 
-</form>
+  <form (ngSubmit)="agregarTarea()" class="mb-3">
 
-<ul class="list-group list-group-flush mb-3">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Escribe una nueva tarea..."
+        [(ngModel)]="nuevaTarea"
+        name="tarea">
 
-  <li 
-    class="list-group-item d-flex align-items-center justify-content-between"
-    *ngFor="let tarea of tareas">
+      <button class="btn btn-primary" type="submit">
+        Agregar
+      </button>
+    </div>
 
-    <div class="form-check">
-      <input 
-        class="form-check-input"
+  </form>
+
+  <ul class="list-group mb-3">
+
+    <li
+      *ngFor="let tarea of tareas"
+      class="list-group-item d-flex align-items-center">
+
+      <input
         type="checkbox"
+        class="form-check-input me-2"
         [(ngModel)]="tarea.completada"
         [ngModelOptions]="{standalone: true}">
 
-      <label 
-        class="form-check-label"
+      <span
         [class.text-decoration-line-through]="tarea.completada"
         [class.text-muted]="tarea.completada">
 
         {{ tarea.nombre }}
 
-      </label>
-    </div>
+      </span>
 
-  </li>
+    </li>
 
-</ul>
+  </ul>
 
-<button 
-  class="btn btn-success w-100"
-  (click)="guardarCambios()">
+  <button
+    class="btn btn-success w-100"
+    (click)="guardarCambios()">
 
-  Guardar cambios
+    Guardar cambios
 
-</button>
+  </button>
+
+</div>
